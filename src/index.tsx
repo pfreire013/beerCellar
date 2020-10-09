@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './configureStore'
-import Home from './screens/Home'
+import Routes from './navigation/routes'
 
 const { persistor, store } = configureStore()
 
@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <StatusBar barStyle='dark-content' backgroundColor='#ffffff' translucent />
-        <Home />
+        <Routes />
       </PersistGate>
     </Provider>
   )
