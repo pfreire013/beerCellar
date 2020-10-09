@@ -1,0 +1,30 @@
+@BASE_URL = https://sandbox-api.brewerydb.com/v2/
+@KEY = ?key=16425efea894091210b061870d1e9afb
+
+### LIST BEERS
+GET {{BASE_URL}}beers/{{KEY}}
+
+### DETAIL BEER
+GET {{BASE_URL}}beer/c4f2KE{{KEY}}
+
+
+### ADD BEER
+POST {{BASE_URL}}beer/{{KEY}}
+Content-Type: application/json
+
+{
+  "name": "Session India Pale Ale",
+  "styleId": 25,
+  "description": "",
+  "abv": "",
+  "ibu": "",
+  "glasswareId": "",
+  "srmId": "",
+  "availableId": "",
+  "beerVariationId": "",
+  "year": "",
+  "foodPairings": "",
+  "servingTemperature": "",
+  "originalGravity": "",
+  "label": ""
+}
