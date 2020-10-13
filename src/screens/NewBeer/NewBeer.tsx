@@ -9,7 +9,7 @@ import { getStyles, addBeer } from '../../redux/beers'
 import Modal from 'react-native-modal'
 import * as Yup from 'yup'
 
-import { Container, MainScroll, Subtitle, TextInput, TextInputBigger, TouchSubmit, TextSubmit, TouchInput } from './styles'
+import { Container, MainScroll, Subtitle, TextInput, TextInputBigger, TouchSubmit, TextSubmit, RadioButtonContainer, RadioButton, RadioInputContainer, RadioText } from './styles'
 import ModalSelected from '../../components/ModalSelected'
 
 interface Value {
@@ -26,6 +26,8 @@ interface Value {
 const NewBeer = ({ addBeer, getStyles, styles }: PropsFromRedux) => {
   const [styleIdValue, setStyleIdValue] = useState<number | string>('')
   const [isModalVisible, setModalVisible] = useState(false)
+  const [isOrganic, setIsOrganic] = useState(false)
+  const [isRequired, setIsRequired] = useState(false)
 
   useEffect(() => {
     getStyles()
@@ -43,8 +45,8 @@ const NewBeer = ({ addBeer, getStyles, styles }: PropsFromRedux) => {
         description: value.description,
         abv: value.abv,
         ibu: value.ibu,
-        isOrganic: value.organic,
-        isRetired: value.required,
+        isOrganic: isOrganic ? 'Y' : 'N',
+        isRetired: isRequired ? 'Y' : 'N',
         foodPairings: value.foodPairings
       })
     } catch (error) {
@@ -133,17 +135,41 @@ const NewBeer = ({ addBeer, getStyles, styles }: PropsFromRedux) => {
                 onChangeText={handleChange('ibu')}
               />
               <Subtitle>Organic</Subtitle>
-              <TextInput
-                placeholder='Yes or No'
-                value={values.organic}
-                onChangeText={handleChange('organic')}
-              />
+              <RadioInputContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                    selected={isOrganic}
+                    onPress={() => setIsOrganic(!isOrganic)}
+                  />
+                  <RadioText>Yes</RadioText>
+                </RadioButtonContainer>
+
+                <RadioButtonContainer>
+                  <RadioButton
+                    selected={!isOrganic}
+                    onPress={() => setIsOrganic(!isOrganic)}
+                  />
+                  <RadioText>No</RadioText>
+                </RadioButtonContainer>
+              </RadioInputContainer>
               <Subtitle>Required</Subtitle>
-              <TextInput
-                placeholder='Yes or No'
-                value={values.required}
-                onChangeText={handleChange('required')}
-              />
+              <RadioInputContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                    selected={isRequired}
+                    onPress={() => setIsRequired(!isRequired)}
+                  />
+                  <RadioText>Yes</RadioText>
+                </RadioButtonContainer>
+
+                <RadioButtonContainer>
+                  <RadioButton
+                    selected={!isRequired}
+                    onPress={() => setIsRequired(!isRequired)}
+                  />
+                  <RadioText>No</RadioText>
+                </RadioButtonContainer>
+              </RadioInputContainer>
               <Subtitle>Food Pairings</Subtitle>
               <TextInputBigger
                 placeholder='Food Pairings'

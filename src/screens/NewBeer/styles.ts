@@ -63,3 +63,31 @@ export const TextSubmit = styled.Text`
   color: ${theme.color.white};
   font-weight: bold;
 `
+
+export const RadioInputContainer = styled.View`
+  flex-direction: row;
+  margin-top: 16px;
+  margin-bottom: 20px;
+`
+
+export const RadioButtonContainer = styled.View`
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+`
+
+export const RadioButton = styled.TouchableOpacity`
+  height: 20px;
+  width: 20px;
+  background: ${(props: {selected: boolean}) => props.selected ? theme.color.primary : theme.color.white};
+  border-width: 2px;
+  border-color: ${theme.color.primary};
+  border-radius: 100px;
+  margin-right: 16px;
+`
+
+export const RadioText = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: ${theme.color.highGrey};
+`
