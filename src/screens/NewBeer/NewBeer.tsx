@@ -1,35 +1,78 @@
 import { Formik } from 'formik'
-import React, { useEffect } from 'react'
-import { Alert, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, Text, View } from 'react-native'
 import { connect, ConnectedProps } from 'react-redux'
 import TopNav from '../../components/TopNav'
 import RouteNames from '../../navigation/RouteNames'
 import { RootState } from '../../redux'
 import { getStyles, addBeer } from '../../redux/beers'
-import { Style } from '../../redux/beers/types'
+import Modal from 'react-native-modal'
 import * as Yup from 'yup'
 
-import { Container, MainScroll, Subtitle, TextInput, TextInputBigger, TouchSubmit, TextSubmit } from './styles'
+import { Container, MainScroll, Subtitle, TextInput, TextInputBigger, TouchSubmit, TextSubmit, TouchInput } from './styles'
+import ModalSelected from '../../components/ModalSelected'
+
+interface Value {
+  name: string,
+  styleId: number,
+  description: string,
+  abv: string,
+  ibu: string,
+  organic: string,
+  required: string,
+  foodPairings: string
+}
 
 const NewBeer = ({ addBeer, getStyles, styles }: PropsFromRedux) => {
+  const [styleIdValue, setStyleIdValue] = useState<number | string>('')
+  const [isModalVisible, setModalVisible] = useState(false)
+
   useEffect(() => {
     getStyles()
   }, [])
 
-  const handleOnSubmit = async ({ name, styleId }) => {
+  const handleOnSubmit = async (value: Value) => {
+    if (styleIdValue === 0) {
+      Alert.alert('Styled is required!')
+    }
+
     try {
-      await addBeer({ name, styleId })
+      await addBeer({
+        name: value.name,
+        styleId: Number(styleIdValue),
+        description: value.description,
+        abv: value.abv,
+        ibu: value.ibu,
+        isOrganic: value.organic,
+        isRetired: value.required,
+        foodPairings: value.foodPairings
+      })
     } catch (error) {
       Alert.alert('Error to create a new beer!')
     }
   }
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible)
+  }
+
   return (
     <Container>
       <TopNav title={RouteNames.RoutesStack.NewBeer} />
+      <Modal isVisible={isModalVisible}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ModalSelected
+            data={styles}
+            type='style'
+            value={styleIdValue}
+            onChange={setStyleIdValue}
+            onClose={toggleModal}
+          />
+        </View>
+      </Modal>
       <MainScroll>
         <Formik
-          onSubmit={handleOnSubmit}
+          onSubmit={(value) => handleOnSubmit(value)}
           initialValues={{
             name: '',
             styleId: '',
@@ -43,7 +86,7 @@ const NewBeer = ({ addBeer, getStyles, styles }: PropsFromRedux) => {
           validationSchema={
             Yup.object().shape({
               name: Yup.string().required('Name is required'),
-              styleId: Yup.string().required('Name is required'),
+              styleId: Yup.number(),
               description: Yup.string(),
               abv: Yup.string(),
               ibu: Yup.string(),
@@ -64,14 +107,12 @@ const NewBeer = ({ addBeer, getStyles, styles }: PropsFromRedux) => {
               />
               {touched.name && errors.name &&
                 <Text style={{ fontSize: 10, color: 'red' }}>{errors.name}</Text>}
-              <Subtitle>Styles</Subtitle>
+              <Subtitle>Styles ID</Subtitle>
               <TextInput
-                placeholder='Styles'
-                value={values.styleId}
-                onChangeText={handleChange('styleId')}
+                onFocus={toggleModal}
+                placeholder='Select style id'
+                value={String(styleIdValue)}
               />
-              {touched.styleId && errors.styleId &&
-                <Text style={{ fontSize: 10, color: 'red' }}>{errors.styleId}</Text>}
               <Subtitle>Description</Subtitle>
               <TextInputBigger
                 placeholder='Description'
@@ -93,13 +134,13 @@ const NewBeer = ({ addBeer, getStyles, styles }: PropsFromRedux) => {
               />
               <Subtitle>Organic</Subtitle>
               <TextInput
-                placeholder='Organic'
+                placeholder='Yes or No'
                 value={values.organic}
                 onChangeText={handleChange('organic')}
               />
               <Subtitle>Required</Subtitle>
               <TextInput
-                placeholder='Required'
+                placeholder='Yes or No'
                 value={values.required}
                 onChangeText={handleChange('required')}
               />

@@ -71,6 +71,7 @@ export interface newBeer {
     abv?: string,
     ibu?: string,
     styleId: number,
+    description: string,
     isOrganic?: string,
     isRetired?: string,
     foodPairings?: string,

@@ -56,7 +56,7 @@ const Home: React.FC<Props> = ({ beers, navigationToNewBeer, onMore, onSearch, s
             ))
           }
           <TouchMore
-            onPress={onMore}
+            onPress={() => onMore}
           >
             <TextMore>More</TextMore>
           </TouchMore>
