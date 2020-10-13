@@ -3,7 +3,8 @@ const KEY = '16425efea894091210b061870d1e9afb'
 
 const PATHS = {
   beers: `beers/?key=${KEY}`,
-  beer: 'beer/'
+  beer: `beers/?key=${KEY}`,
+  styles: `styles/?key=${KEY}`
 }
 
 export default {

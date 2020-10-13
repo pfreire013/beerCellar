@@ -7,24 +7,11 @@ GET {{BASE_URL}}beers/{{KEY}}
 ### DETAIL BEER
 GET {{BASE_URL}}beer/c4f2KE{{KEY}}
 
+### GET BEER STYLES
+GET {{BASE_URL}}styles/{{KEY}}
 
 ### ADD BEER
-POST {{BASE_URL}}beer/{{KEY}}
-Content-Type: application/json
+POST {{BASE_URL}}beers/{{KEY}}
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "name": "Session India Pale Ale",
-  "styleId": 25,
-  "description": "",
-  "abv": "",
-  "ibu": "",
-  "glasswareId": "",
-  "srmId": "",
-  "availableId": "",
-  "beerVariationId": "",
-  "year": "",
-  "foodPairings": "",
-  "servingTemperature": "",
-  "originalGravity": "",
-  "label": ""
-}
+name=Teste&styleId=1
