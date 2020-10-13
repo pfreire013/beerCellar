@@ -1,8 +1,8 @@
-enum TabStack {
+enum RoutesStack {
   Home = 'Home',
-  NewBeer = 'NewBeer',
+  NewBeer = 'New Beer',
   Detail = 'Detail'
 }
 export default {
-  TabStack
+  RoutesStack
 }
