@@ -3,6 +3,7 @@ enum RoutesStack {
   NewBeer = 'New Beer',
   Detail = 'Detail'
 }
+
 export default {
   RoutesStack
 }

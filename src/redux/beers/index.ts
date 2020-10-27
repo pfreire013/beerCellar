@@ -3,10 +3,11 @@ import { Alert } from 'react-native'
 import { Dispatch } from 'redux'
 import RouteNames from '../../navigation/RouteNames'
 import Services from '../../Services'
+import { getStore } from '../../utils'
 import { ADD_BEER, ADD_BEER_FAILURE, ADD_BEER_SUCCESS, Beer, BeersActionTypes, BeersState, GET_BEERS_FAILURE, GET_BEERS_REQUEST, GET_BEERS_SUCCESS, GET_STYLES_FAILURE, GET_STYLES_REQUEST, GET_STYLES_SUCCESS, newBeer, Style } from './types'
 
 export const initialState: BeersState = {
-  _incrementToPurge: 0,
+  _incrementToPurge: 3,
   beers: {
     result: [],
     isPending: false,
@@ -37,7 +38,7 @@ export default function beersReducer (
       return {
         ...state,
         beers: {
-          result: state.beers.result.concat(action.payload),
+          result: action.payload,
           isPending: false,
           error: undefined
         }
@@ -172,7 +173,6 @@ export function addBeer (newBeer: newBeer) {
       dispatch(addBeerSuccess(responseBody.data))
       Alert.alert('Create a new beer success!!')
     } catch (error) {
-      console.log(error)
       dispatch(addBeerFailure(error.message))
     }
   }

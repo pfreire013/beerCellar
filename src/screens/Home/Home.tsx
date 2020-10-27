@@ -56,7 +56,7 @@ const Home: React.FC<Props> = ({ beers, navigationToNewBeer, onMore, onSearch, s
             ))
           }
           <TouchMore
-            onPress={() => onMore}
+            onPress={onMore}
           >
             <TextMore>More</TextMore>
           </TouchMore>
@@ -82,6 +82,7 @@ const HomeContainer = ({ getBeers, beers }: PropsFromRedux) => {
   }
 
   function handleMore () {
+    console.log('more')
     getBeers(pagination + 1)
     setPagination(pagination + 1)
   }
@@ -95,7 +96,6 @@ const HomeContainer = ({ getBeers, beers }: PropsFromRedux) => {
       setIsInSearch(true)
     }
     Services.getBeerSearch(name).then(res => {
-      console.log(res)
       if (res.data.data) {
         setSearchBeer(res.data.data)
       } else {

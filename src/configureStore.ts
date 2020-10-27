@@ -17,7 +17,6 @@ const outbound = (outboundState: RootStateOrAny, key: keyof typeof reducersMap) 
       }
     }
   } catch (error) {
-    console.log(error)
   }
   return { ...outboundState }
 }
